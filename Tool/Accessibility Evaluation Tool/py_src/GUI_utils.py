@@ -570,41 +570,6 @@ def get_nodes(dom: str, filter_query: Callable[[Node], bool] = None) -> List[Nod
         filter_query = lambda x: True
 
     return [node for node in nodes if filter_query(node)]
-    # dom_utf8 = dom.encode('utf-8')
-    # parser = etree.XMLParser(ns_clean=True, recover=True, encoding='utf-8')
-    # tree = etree.fromstring(dom_utf8, parser)
-    # if tree is None:
-    #     return []
-    # commands = []
-    # for i, x in enumerate(tree.getiterator()):
-    #     if filter_query is not None and not filter_query(x):
-    #         continue
-    #     x_attrs = dict(x.attrib.items())
-    #     info = {'resourceId': x_attrs.get('resource-id', ''),
-    #             'contentDescription': x_attrs.get('content-desc', ''),
-    #             'text': x_attrs.get('text', ''),
-    #             'class': x_attrs.get('class', ''),
-    #             'xpath': get_xpath_from_xml_element(x),
-    #             'located_by': 'xpath',
-    #             'skip': False,
-    #             'action': 'click',
-    #             'naf': x_attrs.get('NAF', False),
-    #             'bounds': x_attrs.get('bounds', ""),
-    #             'checkable': x_attrs.get('checkable', ''),
-    #             'checked': x_attrs.get('checked', ''),
-    #             'clickable': x_attrs.get('clickable', ''),
-    #             'enabled': x_attrs.get('enabled', ''),
-    #             'focusable': x_attrs.get('focusable', ''),
-    #             'focused': x_attrs.get('focused', ''),
-    #             'visible': x_attrs.get('visible', True),
-    #             'actionList': x_attrs.get('actionList', ''),
-    #             }
-    #     for k in info:
-    #         if type(info[k]) == str and len(info[k]) == 0:
-    #             info[k] = 'null'
-    #     command = json.loads(json.dumps(info))
-    #     commands.append(command)
-    # return commands
 
 
 def get_actions_from_layout(layout: str,
