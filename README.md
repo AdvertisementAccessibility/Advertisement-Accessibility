@@ -10,7 +10,7 @@ The apps used in our user studies are in the folder **Set Up**:
 The User Study Protocol is under the folder **User Study**:
 
 1. Qualitative Study Protocol.pdf
-2. Qualitative Study Quote
+2. Qualitative Study Codebooks of different versions (We compared the newly created codebooks to versions before to determine theoretical saturation)
 
 The Ad Request Mapping
 
