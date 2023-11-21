@@ -3,7 +3,7 @@ import logging
 from typing import List, Union, Tuple, Dict, Any, Coroutine
 from pathlib import Path
 from PIL import Image, ImageDraw
-
+from skimage import metrics
 from GUI_utils import Node
 
 logger = logging.getLogger(__name__)
@@ -11,8 +11,16 @@ logger = logging.getLogger(__name__)
 
 def synch_run(coroutine: Coroutine) -> Any:
     loop = asyncio.get_event_loop()
-    coroutine_list = [coroutine]
-    return loop.run_until_complete(asyncio.wait(coroutine_list))
+    if loop.is_running():
+        raise RuntimeError("Cannot run the coroutine in an already running event loop")
+
+    # Create a task from the coroutine
+    task = asyncio.ensure_future(coroutine)
+    # Run the task until it completes
+    return loop.run_until_complete(task)
+    # coroutine_list = [coroutine]
+    # coroutine_set= set(coroutine_list)
+    # return loop.run_until_complete(asyncio.wait(coroutine_set))
     # return asyncio.run(coroutine)
     # try:
     #     loop = asyncio.get_running_loop()

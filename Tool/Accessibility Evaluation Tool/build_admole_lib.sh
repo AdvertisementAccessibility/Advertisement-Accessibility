@@ -1,6 +1,6 @@
 #!/bin/bash
 APK_PATH=app/build/outputs/apk/debug/app-debug.apk
-TARGET_PATH=Setup/Latte.apk
+TARGET_PATH=Setup/Admole.apk
 rm $APK_PATH 2> /dev/null
 if ! ./gradlew build; then
 	echo "FAILED!"
@@ -11,5 +11,5 @@ if ! [[ -f "$APK_PATH" ]]; then
 	exit 1
 fi
 cp $APK_PATH $TARGET_PATH
-echo "The Latte APK is located at $TARGET_PATH"
+echo "The Admole APK is located at $TARGET_PATH"
 

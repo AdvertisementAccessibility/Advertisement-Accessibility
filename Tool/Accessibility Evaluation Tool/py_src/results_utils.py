@@ -555,7 +555,7 @@ class AddressBook:
     INITIAL = "INITIAL"
     ## Audits
     TALKBACK_EXPLORE = "talkback_explore"
-    UNLOCATABLE = 'talkback_unlocatable'
+    UNLOCATABLE = 'ad_a11y_issues'
     OVERSIGHT_STATIC = "oversight_static"
     PROCESS_SCREENSHOT = "process_screenshot"
     EXTRACT_ACTIONS = "extract_actions"
@@ -573,7 +573,7 @@ class AddressBook:
         self.audit_path_map = {}
         # ----------- Audit: talkback_explore ---------------
         self.audit_path_map[AddressBook.TALKBACK_EXPLORE] = self.snapshot_result_path.joinpath("TalkBackExplore")
-        self.audit_path_map[AddressBook.UNLOCATABLE] = self.snapshot_result_path.joinpath("UnlocatableExplore")
+        self.audit_path_map[AddressBook.UNLOCATABLE] = self.snapshot_result_path.joinpath("ad_a11y_issues")
         self.audit_path_map[AddressBook.INEFFECTIVE_MODE] = self.snapshot_result_path.joinpath("ineffective")
         self.tb_explore_all_nodes_screenshot = self.audit_path_map[AddressBook.TALKBACK_EXPLORE].joinpath(
             "all_nodes.png")

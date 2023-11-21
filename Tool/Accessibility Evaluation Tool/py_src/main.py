@@ -14,13 +14,14 @@ from controller import create_controller
 from results_utils import AddressBook
 from logger_utils import ColoredFormatter, initialize_logger
 from snapshot import EmulatorSnapshot, DeviceSnapshot, Snapshot
+from task.analyze_ad_screen_task import AnalyzeAdScreenTask
 from task.app_task import TakeSnapshotTask, StoatSaveSnapshotTask
 from task.create_action_gif_task import CreateActionGifTask
 from task.extract_actions_task import ExtractActionsTask
 from task.far_off_elements_task import AnalyzeSnapshotActionTask
 from task.perform_actions_task import PerformActionsTask
 from task.process_screenshot_task import ProcessScreenshotTask
-from task.analyze_snapshot import AnalyzeSnapshotUnlocatableTask
+from task.analyze_snapshot import AnalyzeSnapshotIssuesTask
 from utils import synch_run
 
 logger = logging.getLogger(__name__)
@@ -55,13 +56,16 @@ async def execute_snapshot_task(args, address_book: AddressBook):
         elif args.snapshot_task == "process_screenshot":
             logger.info("Snapshot Task: Process Screenshot")
             await ProcessScreenshotTask(snapshot).execute()
+        elif args.snapshot_task == "analyze_adscreen":
+            logger.info("Snapshot Task: Analyze Ad Screen")
+            await AnalyzeAdScreenTask(snapshot).execute(args.har_path)
         elif args.snapshot_task == 'analyze_snapshot':
             if args.extra is not None:
-                await AnalyzeSnapshotUnlocatableTask(snapshot).execute(mode=args.extra)
+                await AnalyzeSnapshotIssuesTask(snapshot).execute(mode=args.extra)
                 specified_index = list(map(int, args.extra.split(",")))
-                await AnalyzeSnapshotActionTask(snapshot).execute(required_actions = specified_index)
+                await AnalyzeSnapshotIssuesTask(snapshot).execute(required_actions = specified_index)
             else:
-                await AnalyzeSnapshotUnlocatableTask(snapshot).execute()
+                await AnalyzeSnapshotIssuesTask(snapshot).execute()
 
     except Exception as e:
         logger.error("Exception happened in analyzing the snapshot", exc_info=e)
@@ -100,6 +104,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--snapshot', type=str, help='Name of the snapshot on the running AVD, consider all snapshots in the app directory if not provided')
     parser.add_argument('--output-path', type=str, required=True, help='The path that outputs will be written')
+    parser.add_argument('--har-path', type=str, required=True, help='The path of the ad requests')
     parser.add_argument('--app-name', type=str, required=True, help='Name of the app under test')
     parser.add_argument('--app-task', type=str, required=False, help='Name of the task on the app')
     parser.add_argument('--snapshot-task', type=str, required=False, help='Name of the task on the snapshot')
@@ -119,7 +124,6 @@ if __name__ == "__main__":
     app_result_path = Path(args.output_path).joinpath(args.app_name)
     if args.windows:
         asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-        # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     if args.snapshot_task is not None:
         snapshot_result_paths = []
         if args.snapshot:

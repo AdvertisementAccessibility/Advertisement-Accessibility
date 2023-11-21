@@ -23,7 +23,7 @@ class ParallelADBLogger:
         self.lock = None
         self.log_message = ""
 
-    async def _logcat(self) -> asyncio.coroutine:
+    async def _logcat(self) -> asyncio.coroutines:
         async def logcat_handler(connection):
             while True:
                 data = await connection.read(1024)
@@ -38,7 +38,7 @@ class ParallelADBLogger:
         return logcat_handler_task
 
     async def execute_async_with_log(self,
-                                     coroutine_obj: asyncio.coroutine,
+                                     coroutine_obj: asyncio.coroutines,
                                      tags: List[str] = None) -> (dict, Any):
         if self.lock is not None:
             raise Exception("Cannot execute more than one coroutine while logging!")
