@@ -18,8 +18,4 @@ Empirical Study Results
 
 [How we extract UI elements related to Ad](https://github.com/AdvertisementAccessibility/Advertisement-Accessibility/blob/b8619babb35cf8c8563ab870459d51d7a169921a/Tool/Accessibility%20Evaluation%20Tool/py_src/GUI_utils.py#L331C20-L331C20).
 
-The source code of our tool 
-
-[AdMole]: https://github.com/AdvertisementAccessibility/Advertisement-Accessibility/tree/master/Tool/Accessibility%20Evaluation%20Tool
-
-. Detailed instructions can be found in AdMole's readme file.
+The source code of our tool [AdMole]: https://github.com/AdvertisementAccessibility/Advertisement-Accessibility/tree/master/Tool/Accessibility%20Evaluation%20Tool. Detailed instructions can be found in AdMole's readme file.
